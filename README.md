@@ -22,7 +22,9 @@ The Medical Data Extractor consists of several components:
 To get started with the Medical Data Extractor, follow these steps:
 
 1.Clone the repository: git clone <repository_url>
+
 2.Install the required dependencies: pip install -r requirements.txt
+
 3.Run the FastAPI server by ruuning the 'main.py' file
 4.Access the API endpoints and upload medical documents to extract data.
 
@@ -57,7 +59,7 @@ To get started with the Medical Data Extractor, follow these steps:
 
 ## Learnings:
 
-1.OCR (Optical Character Recognition): Utilized OCR techniques to extract text from images, enabling conversion of medical documents into machine-readable formats.
+1.OCR: OCR techniques to extract text from images, enabling conversion of medical documents into machine-readable formats.
 
 2.Computer Vision: Developed skills in image preprocessing, enhancement, and feature extraction using OpenCV library for better readability and analysis of medical documents.
 
