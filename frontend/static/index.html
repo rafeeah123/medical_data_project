@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Data Extractor</title>
+    <style>
+                /* CSS styles for the page */
+
+        body {
+            background-color: #ADD8E6; /* Light blue background */
+            font-family: Arial, sans-serif; /* Use Arial font */
+            margin: 0; /* Remove default margin */
+            padding: 20px; /* Add padding for content */
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center align content horizontally */
+            min-height: 100vh; /* Ensure full viewport height */
+        }
+        h1 {
+            color: #333; /* Dark gray header color */
+            text-align: center; /* Center align the header */
+            margin-bottom: 20px; /* Add space below the heading */
+        }
+        form {
+            width: 300px; /* Set form width */
+            background-color: #fff; /* White background for form */
+            padding: 20px; /* Add padding inside form */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            text-align: left; /* Align form content to the left */
+            margin-bottom: 20px; /* Add space below the form */
+        }
+        input[type="text"],
+        input[type="file"],
+        input[type="submit"] {
+            margin-bottom: 10px; /* Add space between form elements */
+            width: calc(100% - 20px); /* Make form elements full width */
+            padding: 10px; /* Add padding to form elements */
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+        #result {
+            background-color: #fff; /* White background for result */
+            padding: 20px; /* Add padding inside result */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+            text-align: left; /* Align result content to the left */
+            width: 300px; /* Set result width */
+        }
+        /* Styles for extracted details */
+        #result p {
+            margin-bottom: 5px; /* Add space between details */
+        }
+        /* Styles for error messages */
+        #result p.error {
+            color: red; /* Red color for error messages */
+        }
+    </style>
+</head>
+<body>
+    <h1>Medical Data Extractor</h1>
+        <!-- Form for uploading files -->
+
+    <form id="uploadForm" enctype="multipart/form-data">
+        File Format: <input type="text" id="fileFormat"><br>
+        File: <input type="file" id="file"><br>
+        <input type="submit" value="Extract">
+    </form>
+
+    <!-- Container for displaying extraction results -->
+
+    <div id="result"></div>
+    <!-- JavaScript code for handling form submission and displaying results -->
+
+   <script>
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append('file_format', document.getElementById('fileFormat').value);
+    formData.append('file', document.getElementById('file').files[0]);
+
+     // Send form data to server for extraction
+
+    fetch('http://127.0.0.1:8001/extract_from_doc', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultDiv = document.getElementById('result');
+        const fileFormat = document.getElementById('fileFormat').value;
+        if (data) {
+            if (fileFormat === 'prescription') {
+           // Display extracted prescription details
+
+                resultDiv.innerHTML = `
+                    <h2>Extracted Prescription Details</h2>
+                    <p>Patient Name: ${data.patient_name}</p>
+                    <p>Patient Address: ${data.patient_address}</p>
+                    <p>Medicines: ${data.medicines}</p>
+                    <p>Directions: ${data.directions}</p>
+                    <p>Refills: ${data.refills}</p>
+                `;
+            } else if (fileFormat === 'patient_details') {
+              // Display extracted patient details
+
+                resultDiv.innerHTML = `
+                    <h2>Extracted Patient Details</h2>
+                    <p>Patient Name: ${data.patient_name}</p>
+                    <p>Phone Number: ${data.phone_number}</p>
+                    <p>Medical Problems: ${data.medical_problems}</p>
+                    <p>Hepatitis B Vaccination: ${data.hepatitis_b_vaccination}</p>
+                `;
+            } else {
+            // Display error message for invalid file format
+
+                resultDiv.innerHTML = `<p>Error: Invalid file format</p>`;
+            }
+        } else {
+         // Display error message for no data returned
+
+            resultDiv.innerHTML = `<p>Error: No data returned</p>`;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
+
+</body>
+</html>
