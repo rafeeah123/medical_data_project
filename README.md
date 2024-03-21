@@ -33,6 +33,7 @@ To get started with the Medical Data Extractor, follow these steps:
 ### Tools:
 
 1.IDE - PyCharm
+
 2.Postman
 
 ### Technologies:
