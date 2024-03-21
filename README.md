@@ -77,9 +77,11 @@ To get started with the Medical Data Extractor, follow these steps:
 
 ## Future Enhancements:
 
-Improve accuracy and robustness of text extraction through machine learning techniques.
-Enhance preprocessing methods to handle a wider range of document formats and qualities.
-Implement additional features for document classification and data validation.
+1.Improve accuracy and robustness of text extraction through machine learning techniques.
+
+2.Enhance preprocessing methods to handle a wider range of document formats and qualities.
+
+3.Implement additional features for document classification and data validation.
 
 ## Feedback
 
